@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yogish Bakshi — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0c;
+    --ink-muted: #4a4843;
+    --ink-faint: #9a9590;
+    --paper: #f7f5f0;
+    --paper-warm: #eeebe3;
+    --paper-card: #ffffff;
+    --accent: #c75c2a;
+    --accent-light: #f0dfd4;
+    --border: rgba(15,14,12,0.1);
+    --border-strong: rgba(15,14,12,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247,245,240,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* LAYOUT */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+  /* HERO */
+  .hero {
+    padding: 9rem 0 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: 'DATA';
+    position: absolute;
+    top: 4rem; right: -1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 18vw, 14rem);
+    font-weight: 700;
+    color: var(--paper-warm);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-summary {
+    max-width: 560px;
+    font-size: 15px;
+    color: var(--ink-muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    opacity: 0; animation: fadeUp 0.6s 0.3s forwards;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+    opacity: 0; animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 11px 24px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--border-strong); }
+  .btn-outline:hover { border-color: var(--ink); background: var(--paper-warm); }
+  .hero-location {
+    margin-top: 2.5rem;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    display: flex; align-items: center; gap: 6px;
+    opacity: 0; animation: fadeUp 0.6s 0.5s forwards;
+  }
+  .hero-location::before { content: '◉'; color: var(--accent); font-size: 10px; }
+
+  /* CERT STRIP */
+  .cert-strip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1rem 0;
+    overflow: hidden;
+  }
+  .cert-inner {
+    display: flex; gap: 3rem;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  .cert-item {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  .cert-item span { color: var(--accent); margin-right: 0.5rem; }
+
+  /* SECTIONS */
+  section { padding: 5rem 0; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+  }
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .skill-cell {
+    background: var(--paper-card);
+    padding: 1.25rem 1.5rem;
+  }
+  .skill-cell-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  .skill-cell-items {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 1rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .exp-item::before {
+    content: '';
+    position: absolute; left: -2rem; top: 2.25rem;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .exp-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .exp-org {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+  .exp-loc {
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+  }
+  .exp-date {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .exp-bullets {
+    grid-column: 1 / -1;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .exp-bullets li {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    line-height: 1.65;
+    padding-left: 1.2rem;
+    position: relative;
+    font-weight: 300;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .exp-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  /* PROJECTS */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+    gap: 1.25rem;
+  }
+  .proj-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .proj-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.25s;
+    transform-origin: left;
+  }
+  .proj-card:hover::after { transform: scaleX(1); }
+  .proj-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+  .proj-num {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .proj-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .proj-desc {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .proj-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .proj-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    background: var(--paper-warm);
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .proj-link {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .proj-card:hover .proj-link { opacity: 1; }
+
+  /* CERTIFICATIONS */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .cert-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .cert-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+  }
+  .cert-name { font-size: 13px; font-weight: 500; line-height: 1.4; }
+  .cert-issuer { font-size: 11px; color: var(--ink-faint); margin-top: 3px; }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5rem 0;
+  }
+  .contact-section .section-num { color: var(--accent); }
+  .contact-section .section-title { color: var(--paper); }
+  .contact-section .section-header { border-color: rgba(247,245,240,0.15); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .contact-blurb {
+    font-size: 15px;
+    color: rgba(247,245,240,0.65);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 380px;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(247,245,240,0.12);
+    border-radius: 4px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); background: rgba(199,92,42,0.1); }
+  .contact-link-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,245,240,0.4); font-weight: 500; display: block; }
+  .contact-link-val { font-size: 13.5px; color: var(--paper); font-weight: 400; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(247,245,240,0.1);
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+  footer p {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(247,245,240,0.3);
+    text-transform: uppercase;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .container { padding: 0 1.25rem; }
+    .hero { padding: 7rem 0 3rem; }
+    .hero::before { font-size: 5rem; top: 5rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-item::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">YB</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Oracle Analytics Associate Certified · Data Analyst</p>
+    <h1 class="hero-name">Yogish<br><em>Bakshi</em></h1>
+    <p class="hero-summary">
+      I turn raw data into clear, strategic decisions. Specialising in SQL, Python, BigQuery,
+      ETL pipelines, and dashboard development across e-commerce, pharma, non-profit, and service industries.
+      Always building. Always learning.
+    </p>
+    <div class="hero-cta">
+      <a href="mailto:yogishbakshi.2004@gmail.com" class="btn btn-primary">Get in Touch</a>
+      <a href="https://www.linkedin.com/in/yogish-bakshi" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      <a href="https://github.com/Yogish" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    </div>
+    <p class="hero-location">New Delhi, India · Open to remote &amp; global roles</p>
+  </div>
+</section>
+
+<!-- CERT STRIP -->
+<div class="cert-strip">
+  <div class="cert-inner">
+    <span class="cert-item"><span>✦</span> Oracle Analytics Associate Certified</span>
+    <span class="cert-item"><span>✦</span> Oracle Analytics Cloud 2025 Professional</span>
+    <span class="cert-item"><span>✦</span> Microsoft Career Essentials in Data Analysis</span>
+    <span class="cert-item"><span>✦</span> Career Essentials in Generative AI</span>
+    <span class="cert-item"><span>✦</span> Advanced SQL · HackerRank</span>
+    <span class="cert-item"><span>✦</span> GE Aerospace HR Simulation · Forage</span>
+    <span class="cert-item"><span>✦</span> Quantium Data Analytics Simulation</span>
+    <!-- duplicate for seamless loop -->
+    <span class="cert-item"><span>✦</span> Oracle Analytics Associate Certified</span>
+    <span class="cert-item"><span>✦</span> Oracle Analytics Cloud 2025 Professional</span>
+    <span class="cert-item"><span>✦</span> Microsoft Career Essentials in Data Analysis</span>
+    <span class="cert-item"><span>✦</span> Career Essentials in Generative AI</span>
+    <span class="cert-item"><span>✦</span> Advanced SQL · HackerRank</span>
+    <span class="cert-item"><span>✦</span> GE Aerospace HR Simulation · Forage</span>
+    <span class="cert-item"><span>✦</span> Quantium Data Analytics Simulation</span>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Skills</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-cell">
+        <div class="skill-cell-label">Analysis & Reporting</div>
+        <div class="skill-cell-items">SQL · Excel · KPI Reporting<br>Trend Analysis · MIS Reporting<br>EDA · Predictive Analytics</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">BI & Visualisation</div>
+        <div class="skill-cell-items">Power BI · Tableau<br>Looker Studio · Oracle Analytics<br>Streamlit</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Programming</div>
+        <div class="skill-cell-items">Python (pandas, numpy,<br>scikit-learn) · SQL Server<br>BigQuery · GCP</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Data Engineering</div>
+        <div class="skill-cell-items">ETL Pipelines · Data Modelling<br>Star Schema · Data Cleaning<br>Validation · Transformation</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Machine Learning</div>
+        <div class="skill-cell-items">Neural Networks<br>Regression · Classification<br>Large-scale EDA · ML Models</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cell-label">Soft Skills</div>
+        <div class="skill-cell-items">Analytical Thinking<br>Problem Solving · Communication<br>SOP Authoring · Stakeholder Reporting</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="padding-left: 2rem; border-left: none;">
+  <div class="container" style="padding-left: 3rem; border-left: 1px solid var(--border); margin-left: 2rem; max-width: 860px; margin: 0 auto; padding: 5rem 2rem 5rem 3.5rem; border-left: 1px solid var(--border);">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+
+    <div class="exp-item reveal">
+      <div>
+        <span class="exp-tag">Current</span>
+        <div class="exp-role">Research Analyst</div>
+        <div class="exp-org">Humanity Pathways Global</div>
+        <div class="exp-loc">Michigan, USA · Remote</div>
+      </div>
+      <div class="exp-date">Apr 2025 – Present</div>
+      <ul class="exp-bullets">
+        <li>Analysed donor and program datasets using Excel, SQL, and Python to surface engagement and outreach trends</li>
+        <li>Prepared visual reports and dashboards to support program planning and leadership decision-making</li>
+        <li>Cleaned and validated datasets to improve reporting accuracy and consistency</li>
+        <li>Authored SOPs and documented analysis workflows for internal reporting use</li>
+        <li>Delivered data-backed insights to support outreach strategy improvements</li>
+      </ul>
+    </div>
+
+    <div class="exp-item reveal">
+      <div>
+        <div class="exp-role">Data Analyst Intern</div>
+        <div class="exp-org">Sarvagya Institute</div>
+        <div class="exp-loc">New Delhi, India</div>
+      </div>
+      <div class="exp-date">Jun 2024 – Aug 2024</div>
+      <ul class="exp-bullets">
+        <li>Cleaned and transformed 100k+ rows of institutional data using SQL and Python</li>
+        <li>Built Power BI dashboards improving data visibility for department heads</li>
+        <li>Automated KPI reporting, reducing manual workload by ~25%</li>
+      </ul>
+    </div>
+
+    <div class="exp-item reveal">
+      <div>
+        <div class="exp-role">Freelance Data Analyst</div>
+        <div class="exp-org">Independent · Global Clients</div>
+        <div class="exp-loc">Retail · Education · Marketing industries</div>
+      </div>
+      <div class="exp-date">Feb 2022 – Apr 2024</div>
+      <ul class="exp-bullets">
+        <li>Performed data analysis on sales, customer, and operational datasets for multiple clients across industries</li>
+        <li>Built interactive dashboards and reports using Power BI, Tableau, Looker Studio, SQL, and Excel</li>
+        <li>Automated reporting workflows with Google Sheets, Excel, and SQL</li>
+        <li>Conducted data cleaning, transformation, and exploratory analysis to surface business trends</li>
+        <li>Applied light ML tasks using Python (pandas, scikit-learn) for predictive insights</li>
+        <li>Translated business needs into custom KPIs and executive-level visual stories</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--paper-warm);">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-num">Project 01</div>
+        <div class="proj-title">Healthcare Insurance Premium Analysis</div>
+        <div class="proj-desc">Built an analytical model studying factors affecting insurance premiums. Conducted EDA on 100k+ records across age, BMI, and lifestyle factors. Deployed a Streamlit app for scenario-based visualisation.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Streamlit</span>
+          <span class="proj-tag">EDA</span>
+          <span class="proj-tag">ML</span>
+        </div>
+        <a href="https://github.com/Yogish" target="_blank" class="proj-link">GitHub ↗</a>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-num">Project 02</div>
+        <div class="proj-title">Data Warehouse & Analytics Pipeline</div>
+        <div class="proj-desc">Built SQL Server ETL pipelines for ERP/CRM CSV data. Designed a star schema data model and wrote analytical SQL queries powering executive dashboards.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">SQL Server</span>
+          <span class="proj-tag">ETL</span>
+          <span class="proj-tag">Star Schema</span>
+          <span class="proj-tag">Data Warehousing</span>
+        </div>
+        <a href="https://github.com/Yogish" target="_blank" class="proj-link">GitHub ↗</a>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-num">Project 03</div>
+        <div class="proj-title">Wisdom Pets Digital Transformation</div>
+        <div class="proj-desc">Migrated and modelled data in BigQuery. Executed analytical SQL queries, built Looker Studio dashboards, and produced business reports to support strategic decision-making.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">BigQuery</span>
+          <span class="proj-tag">Looker Studio</span>
+          <span class="proj-tag">GCP</span>
+          <span class="proj-tag">SQL</span>
+        </div>
+        <a href="https://github.com/Yogish" target="_blank" class="proj-link">GitHub ↗</a>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-num">Project 04</div>
+        <div class="proj-title">Sales Performance Reporting</div>
+        <div class="proj-desc">Built end-to-end ETL pipelines and reporting models for sales data. Delivered Tableau dashboards surfacing revenue, profitability, and performance insights for stakeholders.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">SQL</span>
+          <span class="proj-tag">Tableau</span>
+          <span class="proj-tag">Excel</span>
+          <span class="proj-tag">ETL</span>
+        </div>
+        <a href="https://github.com/Yogish" target="_blank" class="proj-link">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Certifications</h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">O</div>
+        <div>
+          <div class="cert-name">Oracle Analytics Associate Certified (OAAC)</div>
+          <div class="cert-issuer">Oracle</div>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">O</div>
+        <div>
+          <div class="cert-name">Oracle Analytics Cloud 2025 Certified Professional</div>
+          <div class="cert-issuer">Oracle</div>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">M</div>
+        <div>
+          <div class="cert-name">Career Essentials in Data Analysis</div>
+          <div class="cert-issuer">Microsoft & LinkedIn</div>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">M</div>
+        <div>
+          <div class="cert-name">Career Essentials in Generative AI</div>
+          <div class="cert-issuer">Microsoft & LinkedIn</div>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">H</div>
+        <div>
+          <div class="cert-name">Advanced SQL</div>
+          <div class="cert-issuer">HackerRank</div>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">F</div>
+        <div>
+          <div class="cert-name">Data Analytics / Data Science Job Simulations</div>
+          <div class="cert-issuer">Forage — British Airways, HP, Quantium, GE Aerospace</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section style="background: var(--paper-warm); padding: 3rem 0;">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Education</h2>
+    </div>
+    <div class="exp-item reveal" style="border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem 2rem; background: var(--paper-card);">
+      <div>
+        <div class="exp-role">Bachelor of Computer Applications (BCA)</div>
+        <div class="exp-org">Trinity Institute of Professional Studies (TIPS, Dwarka)</div>
+        <div class="exp-loc">Affiliated with Guru Gobind Singh Indraprastha University · Data Analytics specialisation</div>
+      </div>
+      <div class="exp-date">2022 – 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num" style="color: var(--accent);">06</span>
+      <h2 class="section-title" style="color: var(--paper);">Get in Touch</h2>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-blurb">
+          Open to Data Analyst, Cloud Analyst, Business Intelligence Analyst, and Analytics Engineer roles — remote or New Delhi based. Let's build something data-driven together.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:yogishbakshi.2004@gmail.com" class="contact-link">
+          <div>
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-val">yogishbakshi.2004@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/yogish-bakshi" target="_blank" class="contact-link">
+          <div>
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-val">linkedin.com/in/yogish-bakshi</span>
+          </div>
+        </a>
+        <a href="https://github.com/Yogish" target="_blank" class="contact-link">
+          <div>
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-val">github.com/Yogish</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Yogish Bakshi · Data Analyst · New Delhi, India · 2025</p>
+  </div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
